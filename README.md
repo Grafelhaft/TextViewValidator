@@ -1,5 +1,6 @@
 # TextViewValidator
-Simple way to add different validators to your Android TextView
+Simple way to add different validators to your Android TextView or EditText.
+Also supports Android's material TextInputLayout and TextInputEditText.
 
 ```xml
 <com.google.android.material.textfield.TextInputLayout
