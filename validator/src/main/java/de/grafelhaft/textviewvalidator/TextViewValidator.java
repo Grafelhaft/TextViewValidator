@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * Created by @author Markus Graf (Grafelhaft) on 23.09.2020
  */
-public class TextViewValidatorPro implements TextWatcher, View.OnFocusChangeListener {
+public class TextViewValidator implements TextWatcher, View.OnFocusChangeListener {
 
     private TextView textView;
     private TextInputLayout textInputLayout;
@@ -24,7 +24,7 @@ public class TextViewValidatorPro implements TextWatcher, View.OnFocusChangeList
     private List<IValidator> validators = new ArrayList<>();
     private List<OnTextViewValidListener> listeners = new ArrayList<>();
 
-    public TextViewValidatorPro(TextView textView) {
+    public TextViewValidator(TextView textView) {
         this.textView = textView;
         this.textView.addTextChangedListener(this);
         this.textView.setOnFocusChangeListener(this);
@@ -37,32 +37,32 @@ public class TextViewValidatorPro implements TextWatcher, View.OnFocusChangeList
         return this.isValid;
     }
 
-    public TextViewValidatorPro addValidator(IValidator validator) {
+    public TextViewValidator addValidator(IValidator validator) {
         this.validators.add(validator);
         return this;
     }
 
-    public TextViewValidatorPro removeValidator(IValidator validator) {
+    public TextViewValidator removeValidator(IValidator validator) {
         this.validators.remove(validator);
         return this;
     }
 
-    public TextViewValidatorPro clearValidators() {
+    public TextViewValidator clearValidators() {
         this.validators.clear();
         return this;
     }
 
-    public TextViewValidatorPro addListener(OnTextViewValidListener listener) {
+    public TextViewValidator addListener(OnTextViewValidListener listener) {
         this.listeners.add(listener);
         return this;
     }
 
-    public TextViewValidatorPro removeListener(OnTextViewValidListener listener) {
+    public TextViewValidator removeListener(OnTextViewValidListener listener) {
         this.listeners.remove(listener);
         return this;
     }
 
-    public TextViewValidatorPro clearListener() {
+    public TextViewValidator clearListener() {
         this.listeners.clear();
         return this;
     }

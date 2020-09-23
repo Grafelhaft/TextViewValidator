@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import de.grafelhaft.textviewvalidator.TextViewValidatorPro;
+import de.grafelhaft.textviewvalidator.TextViewValidator;
 import de.grafelhaft.textviewvalidator.ValidationError;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView textInputEdit = findViewById(R.id.text_input_edit);
-        TextViewValidatorPro validator = new TextViewValidatorPro(textInputEdit)
+        TextViewValidator validator = new TextViewValidator(textInputEdit)
                 .addValidator(((view, editable) -> editable.length() > 0 ? null : new ValidationError("Must be greater than 0")))
                 .addValidator(((view, editable) -> editable.length() < 8 ? null : new ValidationError("Must be smaller than 8")))
                 .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
 
         TextView textView = findViewById(R.id.text_edit);
-        TextViewValidatorPro validator2 = new TextViewValidatorPro(textView)
+        TextViewValidator validator2 = new TextViewValidator(textView)
                 .addValidator(((view, editable) -> !"Error".equals(editable) ? null : new ValidationError("Must not be 'Error'")))
                 .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
     }
