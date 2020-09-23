@@ -28,15 +28,15 @@ Simple way to add different validators to your Android TextView
 
 ```java
 TextView textInputEdit = findViewById(R.id.text_input_edit);
-TextViewValidator validator = new TextViewValidator(textInputEdit);
-validator.setErrorMessage("Input must be less than 8 chars!");
-validator.addRule((view, editable) -> editable.length() > 0);
-validator.addRule((view, editable) -> editable.length() < 8);
+TextViewValidatorPro validator = new TextViewValidatorPro(textInputEdit)
+        .addValidator(((view, editable) -> editable.length() > 0 ? null : new ValidationError("Must be greater than 0")))
+        .addValidator(((view, editable) -> editable.length() < 8 ? null : new ValidationError("Must be smaller than 8")))
+        .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
 
 TextView textView = findViewById(R.id.text_edit);
-TextViewValidator validator1 = new TextViewValidator(textView);
-validator1.setErrorMessage("Input must not be 'Test'!");
-validator1.addRule(((view, editable) -> !"Test".equals(editable.toString())));
+TextViewValidatorPro validator2 = new TextViewValidatorPro(textView)
+        .addValidator(((view, editable) -> !"Error".equals(editable) ? null : new ValidationError("Must not be 'Error'")))
+        .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
 ```
 
-![alt text](https://github.com/Grafelhaft/TextViewValidator/blob/master/device-2020-09-22-223902.png?raw=true "Screenshot")
+![alt text](https://github.com/Grafelhaft/TextViewValidator/blob/master/screenshot.png?raw=true "Screenshot")
