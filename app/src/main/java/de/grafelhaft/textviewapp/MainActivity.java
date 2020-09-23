@@ -1,6 +1,7 @@
 package de.grafelhaft.textviewapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -8,7 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import de.grafelhaft.textviewvalidator.TextViewValidator;
+import de.grafelhaft.textviewvalidator.TextViewValidatorPro;
+import de.grafelhaft.textviewvalidator.ValidationError;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,15 +22,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView textInputEdit = findViewById(R.id.text_input_edit);
-        TextViewValidator validator = new TextViewValidator(textInputEdit);
-        validator.setErrorMessage("Input must be less than 8 chars!");
-        validator.addRule((view, editable) -> editable.length() > 0);
-        validator.addRule((view, editable) -> editable.length() < 8);
+        TextViewValidatorPro validator = new TextViewValidatorPro(textInputEdit)
+                .addValidator(((view, editable) -> editable.length() > 0 ? null : new ValidationError("Must be greater than 0")))
+                .addValidator(((view, editable) -> editable.length() < 8 ? null : new ValidationError("Must be smaller than 8")))
+                .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
 
         TextView textView = findViewById(R.id.text_edit);
-        TextViewValidator validator1 = new TextViewValidator(textView);
-        validator1.setErrorMessage("Input must not be 'Test'!");
-        validator1.addRule(((view, editable) -> !"Test".equals(editable.toString())));
+        TextViewValidatorPro validator2 = new TextViewValidatorPro(textView)
+                .addValidator(((view, editable) -> !"Error".equals(editable) ? null : new ValidationError("Must not be 'Error'")))
+                .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
     }
 
     @Override
