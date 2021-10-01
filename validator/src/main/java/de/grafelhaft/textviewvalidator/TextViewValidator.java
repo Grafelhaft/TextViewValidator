@@ -22,7 +22,8 @@ public class TextViewValidator implements TextWatcher, View.OnFocusChangeListene
 
     private boolean isValid;
     private List<IValidator> validators = new ArrayList<>();
-    private List<OnTextViewValidListener> listeners = new ArrayList<>();
+    private List<OnTextViewValidListener> onTextViewValidListeners = new ArrayList<>();
+    private List<OnTextViewChangedListener> onTextViewChangedListeners = new ArrayList<>();
 
     public TextViewValidator(TextView textView) {
         this.textView = textView;
@@ -52,18 +53,33 @@ public class TextViewValidator implements TextWatcher, View.OnFocusChangeListene
         return this;
     }
 
-    public TextViewValidator addListener(OnTextViewValidListener listener) {
-        this.listeners.add(listener);
+    public TextViewValidator addValidListener(OnTextViewValidListener listener) {
+        this.onTextViewValidListeners.add(listener);
         return this;
     }
 
-    public TextViewValidator removeListener(OnTextViewValidListener listener) {
-        this.listeners.remove(listener);
+    public TextViewValidator removeValidListener(OnTextViewValidListener listener) {
+        this.onTextViewValidListeners.remove(listener);
         return this;
     }
 
-    public TextViewValidator clearListener() {
-        this.listeners.clear();
+    public TextViewValidator clearValidListener() {
+        this.onTextViewValidListeners.clear();
+        return this;
+    }
+
+    public TextViewValidator addChangeListener(OnTextViewChangedListener listener) {
+        this.onTextViewChangedListeners.add(listener);
+        return this;
+    }
+
+    public TextViewValidator removeChangeListener(OnTextViewChangedListener listener) {
+        this.onTextViewChangedListeners.remove(listener);
+        return this;
+    }
+
+    public TextViewValidator clearChangeListener() {
+        this.onTextViewChangedListeners.clear();
         return this;
     }
 
@@ -94,12 +110,16 @@ public class TextViewValidator implements TextWatcher, View.OnFocusChangeListene
         }
 
         if (this.isValid != isValid) {
-            for (OnTextViewValidListener l : listeners) {
-                l.onValid(this.textView, isValid);
+            for (OnTextViewValidListener l : onTextViewValidListeners) {
+                l.onValid(this.textView, editable.toString(), isValid);
             }
         }
 
         this.isValid = isValid;
+
+        for (OnTextViewChangedListener l : onTextViewChangedListeners) {
+            l.onTextChanged(editable.toString());
+        }
     }
 
     @Override

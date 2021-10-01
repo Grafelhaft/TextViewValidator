@@ -25,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
         TextViewValidator validator = new TextViewValidator(textInputEdit)
                 .addValidator(((view, editable) -> editable.length() > 0 ? null : new ValidationError("Must be greater than 0")))
                 .addValidator(((view, editable) -> editable.length() < 8 ? null : new ValidationError("Must be smaller than 8")))
-                .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
+                .addValidListener((v, s, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
 
         TextView textView = findViewById(R.id.text_edit);
         TextViewValidator validator2 = new TextViewValidator(textView)
                 .addValidator(((view, editable) -> !"Error".equals(editable) ? null : new ValidationError("Must not be 'Error'")))
-                .addListener((v, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
+                .addValidListener((v, s, isValid) -> Log.d("Validation changed", Boolean.toString(isValid)));
     }
 
     @Override
